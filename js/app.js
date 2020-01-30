@@ -3,6 +3,8 @@ const email = document.getElementById('email');
 const subject = document.getElementById('asunto');
 const message = document.getElementById('mensaje');
 const sendButton = document.getElementById('enviar');
+const form = document.getElementById('enviar-mail');
+const resetButton = document.getElementById('resetBtn');
 
 // EventListeners
 eventListeners();
@@ -13,6 +15,12 @@ function eventListeners() {
     email.addEventListener('blur', validateField);
     subject.addEventListener('blur', validateField);
     message.addEventListener('blur', validateField);
+
+    // When the send button is clicked
+    sendButton.addEventListener('click', sendEmail);
+
+    // Reset button
+    resetButton.addEventListener('click', resetForm);
 }
 
 // Functions
@@ -38,7 +46,36 @@ function validateField() {
             sendButton.disabled = true;
         }
     }
-}  
+}
+
+// When the email is sent
+function sendEmail(e) {
+    e.preventDefault();
+    // The spinner gif is displayed when the email is being sent
+    const spinnerGif = document.querySelector('#spinner');
+    spinnerGif.style.display = 'block';
+
+    // Create a img tag that contents a mail picture
+    const sentPic = document.createElement('img');
+    // the directory where the image is stored is given to the src attribute
+    sentPic.src = 'img/mail.gif';
+    sentPic.style.display = 'block'
+
+    // Set time out to hide spinner and show mail pic
+    setTimeout(function() {
+        spinnerGif.remove();
+        // the picture is added to the DOM
+        document.querySelector('#loaders').appendChild(sentPic);
+        //Another time out to remove the sent picture after 5s
+        setTimeout(function() {
+            sentPic.remove();
+            // Reset form
+            form.reset();
+
+        }, 5000) 
+    }, 3000);
+
+}
 
 function validateLength(field) {
     // if the field content length is greater than 0
@@ -63,4 +100,9 @@ function validateEmail(field) {
         field.style.borderBottomColor = 'red';
         field.classList.add('error');
     }
+}
+
+// Reset form
+function resetForm() {
+    form.reset();
 }
