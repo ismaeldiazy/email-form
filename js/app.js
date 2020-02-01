@@ -37,7 +37,7 @@ function validateField() {
     }
     let errors = document.querySelectorAll('.error');
     // If all the fields are not empty
-    if(email !== '' && subject.value !== '' && message !== '') {
+    if(email.value !== '' && subject.value !== '' && message.value !== '') {
         // and there's no error class
         if (errors.length === 0) {
             // the send button is activated
